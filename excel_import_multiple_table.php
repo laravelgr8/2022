@@ -1,3 +1,44 @@
+composer require maatwebsite/excel
+config/app.php
+'providers' => [
+	....
+	Maatwebsite\Excel\ExcelServiceProvider::class,
+],
+'aliases' => [
+	....
+	'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+],
+
+php artisan make:import UsersImport --model=User
+
+
+
+
+//on controller: 
+
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
+
+public function import() 
+{
+    Excel::import(new UsersImport,request()->file('file'));
+
+    return back();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//on app/Import
 <?php
 
 namespace App\Imports;
@@ -43,3 +84,18 @@ class UsersImport implements ToCollection,WithHeadingRow
       
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
