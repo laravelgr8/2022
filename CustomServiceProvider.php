@@ -1,3 +1,65 @@
+===============================================First method =================================
+Step 1 :
+php artisan make:provider SiteServiceProvider
+
+Step 2:
+Go to config->app.php in provider section
+'providers' => [
+        ...
+
+        App\Providers\SiteServiceProvider::class,
+        
+        ...
+    ]
+
+
+Step 3 :
+create a folder in app->Repo->SiteRepo.php
+<?php
+namespace App\Repo;
+use App\Repo\SiteRepo;
+class SiteRepo
+{
+    public function details()
+    {
+        return [
+            'server' => 'AWS',
+            'type' => 'dedicated',
+            'disk' => '1250Mb',
+        ];
+    }
+}
+
+
+Step 4: 
+Now you go to provider folder and open your create service provider file
+and import 
+use App\Repo\SiteRepo;
+
+public function register()
+{
+    $this->app->bind('SiteRepo', function($app) {
+        return new SiteRepo();
+    });
+}
+
+
+Step 5 :
+On controller 
+use App\Repo\SiteRepo;
+
+public function index(SiteRepo $siterepo)
+{
+    $server_details = $siterepo->details();
+
+    dd($server_details);
+}
+
+
+
+
+
+================================================second method=================================
 Step 1: 
 create a folder in app folder App->Service
 Create to file
@@ -40,6 +102,7 @@ App\Providers\AddServiceProvider::class,
 
 Step 4:
 on controller 
+use App\Service\AddServiceProvider;
 public function test(AddServiceProvider $addservice)
 {
     return $addservice->add(10,4);
