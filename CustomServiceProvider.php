@@ -54,7 +54,32 @@ public function index(SiteRepo $siterepo)
 
     dd($server_details);
 }
+------------------
+View composer: -
 
+use Illuminate\Support\Facades\View;
+
+public function boot()
+{
+    View::composer(['demo1', 'demo2'], function($view) {
+        $data=DB::table('students')->get();
+        $view->with('key', $data);
+    });
+}
+
+
+Route::get('/demo1', function () {
+    return view('demo1');
+});
+
+Route::get('/demo2', function () {
+    return view('demo2');
+});
+
+
+<?php 
+dd($key);
+?>
 
 
 
