@@ -37,15 +37,7 @@ return array(
 
 
 How to specific database connect by query builder
-27
 
-
-You should use:
-
-27
-
-
-You should use:
 
 $programs=DB::connection('mysql2')
 ->table('node')
